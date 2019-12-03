@@ -18,3 +18,6 @@ property1 = Property.new({
 
 property1.save()
 property2.save()
+
+binding.pry()
+nil

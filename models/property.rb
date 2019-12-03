@@ -28,4 +28,31 @@ attr_accessor :address, :value, :number_of_bedrooms, :year_built
     db.close()
   end
 
+  def update()
+    db = PG.connect({ dbname: 'property_lab', host: 'localhost' })
+    sql =
+    "UPDATE track_properties SET (
+      address,
+      value,
+      number_of_bedrooms,
+      year_built
+    ) = (
+      $1, $2, $3, $4
+    ) WHERE id = $5;"
+    values = [@address, @value, @number_of_bedrooms, @year_built, @id]
+    db.prepare("update", sql)
+    db.exec_prepared("update", values)
+    db.close()
+  end
+
+  def delete()
+    db = PG.connect({ dbname: 'property_lab', host: 'localhost' })
+    sql =
+    "DELETE FROM track_properties WHERE id = $1"
+    values = [@id]
+    db.prepare("delete_one", sql)
+    db.exec_prepared("delete_one", values)
+    db.close()
+  end
+
 end
